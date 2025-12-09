@@ -3,60 +3,78 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Request account deletion for Floating Tasbih app">
   <title>Account Deletion — Floating Tasbih</title>
 
   <link rel="icon" type="image/png" href="icon.png">
   <link rel="shortcut icon" type="image/png" href="icon.png">
+  <link rel="apple-touch-icon" href="icon.png">
   
   <style>
-    /* نفس متغيرات التصميم لضمان التطابق */
+    /* متغيرات التصميم */
     :root{--bg:#f7f8fb;--card:#fff;--text:#0b1220;--muted:#6b7280;--accent:#0b63d1;--danger:#dc2626;--radius:12px;--input-bg:#f3f4f6;--border:#e5e7eb}
     [data-theme='dark']{--bg:#071025;--card:#071026;--text:#e6eef8;--muted:#9aa6bd;--input-bg:#111827;--border:#1f2937}
+    
+    /* الأساسيات */
     *{box-sizing:border-box}
     html,body{height:100%} 
     body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; margin:0;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased; transition: background 0.3s ease;}
-    .wrap{max-width:600px;margin:40px auto;padding:20px} /* عرض أقل للتركيز */
+    
+    /* التخطيط */
+    .wrap{max-width:560px;margin:40px auto;padding:20px}
     .card{background:var(--card);border-radius:var(--radius);padding:32px;box-shadow:0 6px 20px rgba(2,6,23,.06)}
     
+    /* الرأس */
     header{display:flex;align-items:center;justify-content:space-between;margin-bottom: 24px;}
-    h1{margin:0;font-size:22px; font-weight: 700;}
-    
+    h1{margin:0;font-size:20px; font-weight: 700;}
+    .meta{font-size:12px;color:var(--muted);margin-top:4px}
+
+    /* الأزرار */
     .controls{display:flex;gap:8px;align-items:center}
     .btn-icon {
-        height: 36px; width: 36px; border-radius: 50%; display: inline-flex;
+        height: 36px; padding: 0 12px; border-radius: 99px; display: inline-flex;
         align-items: center; justify-content: center; border: none; cursor: pointer;
-        font-size: 16px; color: var(--text); background: rgba(0, 0, 0, 0.05);
+        font-size: 14px; font-weight: 500; color: var(--text); background: rgba(0, 0, 0, 0.05);
         transition: 0.2s;
     }
     .btn-icon:hover { background: rgba(0, 0, 0, 0.1); }
     [data-theme='dark'] .btn-icon { background: rgba(255, 255, 255, 0.1); }
+    [data-theme='dark'] .btn-icon:hover { background: rgba(255, 255, 255, 0.2); }
 
-    /* تنسيق النموذج */
-    .form-group { margin-bottom: 18px; }
-    label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 500; }
+    /* النموذج */
+    .form-group { margin-bottom: 20px; }
+    label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 600; }
     input, textarea {
-        width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border);
+        width: 100%; padding: 12px 14px; border-radius: 8px; border: 1px solid var(--border);
         background: var(--input-bg); color: var(--text); font-family: inherit; font-size: 15px;
-        transition: 0.2s;
+        transition: 0.2s; resize: vertical;
     }
-    input:focus, textarea:focus { outline: none; border-color: var(--accent); ring: 2px solid var(--accent); }
+    input:focus, textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(11, 99, 209, 0.1); }
     
+    /* صندوق التحذير */
     .warning-box {
-        background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.2);
-        color: var(--danger); padding: 12px; border-radius: 8px; font-size: 13px;
-        margin-bottom: 24px; display: flex; align-items: start; gap: 10px; line-height: 1.5;
+        background: rgba(220, 38, 38, 0.08); border: 1px solid rgba(220, 38, 38, 0.2);
+        color: var(--danger); padding: 16px; border-radius: 8px; font-size: 14px;
+        margin-bottom: 24px; display: flex; align-items: start; gap: 12px; line-height: 1.6;
     }
+    .warning-icon { font-size: 18px; margin-top: -2px; }
 
+    /* زر الإرسال */
     .btn-submit {
         width: 100%; padding: 14px; background: var(--danger); color: white;
-        border: none; border-radius: 8px; font-size: 16px; font-weight: 600;
-        cursor: pointer; transition: 0.2s; margin-top: 10px;
+        border: none; border-radius: 10px; font-size: 16px; font-weight: 600;
+        cursor: pointer; transition: 0.2s; margin-top: 8px;
     }
-    .btn-submit:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-submit:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25); }
+    .btn-submit:active { transform: translateY(0); }
 
-    footer { text-align: center; margin-top: 24px; font-size: 13px; color: var(--muted); }
-    a { color: var(--accent); text-decoration: none; }
+    /* التذييل */
+    footer { text-align: center; margin-top: 28px; font-size: 13px; color: var(--muted); border-top: 1px solid var(--border); padding-top: 20px; }
+    footer p { margin-bottom: 6px; }
+    a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    a:hover { text-decoration: underline; }
 
+    /* اتجاه اللغة */
     :root[dir='rtl']{direction:rtl}
     :root[dir='ltr']{direction:ltr}
   </style>
@@ -65,15 +83,18 @@
   <div class="wrap">
     <div class="card">
       <header>
-        <h1 id="page-title">طلب حذف الحساب</h1>
+        <div>
+            <h1 id="page-title">طلب حذف الحساب</h1>
+            <div class="meta" id="last-updated">Last updated: —</div>
+        </div>
         <div class="controls">
           <button id="theme-toggle" class="btn-icon">🌙</button>
-          <button id="lang-toggle" class="btn-icon" style="width: auto; padding: 0 12px; border-radius: 20px; font-size: 13px;">English</button>
+          <button id="lang-toggle" class="btn-icon">English</button>
         </div>
       </header>
 
       <div class="warning-box">
-        <span>⚠</span>
+        <span class="warning-icon">⚠</span>
         <span id="warning-text">تحذير: هذا الإجراء نهائي. سيتم حذف جميع بياناتك بما في ذلك سجلات التسبيح والمشتريات والتقدم المحفوظ ولن تتمكن من استعادتها.</span>
       </div>
 
@@ -93,16 +114,25 @@
 
       <footer>
         <p id="footer-text">سيتم توجيهك إلى تطبيق البريد الإلكتروني لإرسال طلب التأكيد.</p>
-        <a href="mailto:tariqaleiman@gmail.com">tariqaleiman@gmail.com</a>
+        <div style="margin-top:8px">
+            <a href="mailto:tariqaleiman@gmail.com">tariqaleiman@gmail.com</a>
+        </div>
+        <div style="margin-top:12px; font-size: 11px; opacity: 0.7;">
+            © <span id="year"></span> Floating Tasbih
+        </div>
       </footer>
     </div>
   </div>
 
   <script>
+    // 🛑 التاريخ مضبوط على 9 ديسمبر 2025
+    const UPDATED_DATE = '2025-12-09';
+
     // 🌍 نصوص اللغات
     const TEXTS = {
       ar: {
         title: "طلب حذف الحساب",
+        updated: "آخر تحديث: ",
         warning: "تحذير: هذا الإجراء نهائي. سيتم حذف جميع بياناتك بما في ذلك سجلات التسبيح والمشتريات والتقدم المحفوظ ولن تتمكن من استعادتها.",
         lblEmail: "البريد الإلكتروني المرتبط بالحساب",
         lblReason: "سبب الحذف (اختياري)",
@@ -114,6 +144,7 @@
       },
       en: {
         title: "Delete Account",
+        updated: "Last updated: ",
         warning: "Warning: This action is permanent. All your data including tasbih logs, purchases, and saved progress will be deleted and cannot be restored.",
         lblEmail: "Account Email Address",
         lblReason: "Reason for deletion (Optional)",
@@ -125,9 +156,10 @@
       }
     };
 
-    // ⚙️ إعدادات العناصر
+    // ⚙️ العناصر
     const els = {
       title: document.getElementById('page-title'),
+      updated: document.getElementById('last-updated'),
       warning: document.getElementById('warning-text'),
       lblEmail: document.getElementById('lbl-email'),
       lblReason: document.getElementById('lbl-reason'),
@@ -137,8 +169,11 @@
       themeBtn: document.getElementById('theme-toggle'),
       emailInput: document.getElementById('email'),
       reasonInput: document.getElementById('reason'),
-      form: document.getElementById('deleteForm')
+      form: document.getElementById('deleteForm'),
+      year: document.getElementById('year')
     };
+
+    if(els.year) els.year.textContent = new Date().getFullYear();
 
     // 🔄 إدارة الحالة
     let currentLang = localStorage.getItem('del-lang') || (navigator.language.startsWith('ar') ? 'ar' : 'en');
@@ -156,6 +191,7 @@
       els.btn.textContent = t.btn;
       els.footer.textContent = t.footer;
       els.langBtn.textContent = t.langBtn;
+      els.updated.textContent = t.updated + UPDATED_DATE;
 
       if(currentTheme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
